@@ -1,7 +1,7 @@
 import aiohttp
 import asyncio
-import async_timeout
 from bs4 import BeautifulSoup
+from decorators import logtime
 
 urls = [
     'https://readmha.com/chapter/boku-no-hero-academia-chapter-277',
@@ -12,15 +12,29 @@ urls = [
 
 
 async def fetch(session, url):
-    async with async_timeout.timeout(10):
-        async with session.get(url) as response:
-            return await response.text()
+    async with session.get(url) as response:
+        return await response.text()
 
 
 async def main(url):
     async with aiohttp.ClientSession() as session:
         html = await fetch(session, url)
-        print(html)
+        soup = await soup_maker(html)
+
+
+async def soup_maker(html, display_result=False):
+    soup = BeautifulSoup(html, 'html.parser')
+    if display_result:
+        print(soup.prettify())
+    return soup
+
+
+async def extract_text(html):
+    soup = await soup_maker(html)
+    if soup.findAll('img', src='https://i.imgur.com/MXUX5T4.jpg'):
+        print('nie ma')
+    else:
+        print('jest')
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from decorators import logtime
 
 urls = [
     'https://readmha.com/chapter/boku-no-hero-academia-chapter-277',
@@ -8,14 +9,19 @@ urls = [
     'https://readchainsawman.com/chapter/chainsaw-man-chapter-76/'
 ]
 
+@logtime
+def main():
+    for url in urls:
+        r = requests.get(url)
+        print(f'''{url.split('/')[2]}: ''')
+        if r.status_code == 404:
+            print('404 ni ma')
+        soup = BeautifulSoup(r.content, 'html.parser')
+        if soup.findAll('img', src='https://i.imgur.com/MXUX5T4.jpg'):
+            print('nie ma')
+        else:
+            print('jest')
 
-for url in urls:
-    r = requests.get(url)
-    print(f'''{url.split('/')[2]}: ''')
-    if r.status_code == 404:
-        print('404 ni ma')
-    soup = BeautifulSoup(r.content, 'html.parser')
-    if soup.findAll('img', src='https://i.imgur.com/MXUX5T4.jpg'):
-        print('nie ma')
-    else:
-        print('jest')
+
+if __name__ == '__main__':
+    main()
