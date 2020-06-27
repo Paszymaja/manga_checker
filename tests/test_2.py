@@ -1,7 +1,5 @@
 import aiohttp
 import asyncio
-import async_timeout
-from bs4 import BeautifulSoup
 
 urls = [
     'https://readmha.com/chapter/boku-no-hero-academia-chapter-277',
@@ -10,10 +8,10 @@ urls = [
     'https://readchainsawman.com/chapter/chainsaw-man-chapter-76/'
 ]
 
+
 async def fetch(session, url):
-    async with async_timeout.timeout(10):
-        async with session.get(url) as response:
-            return await response.text()
+    async with session.get(url) as response:
+        return await response.text()
 
 
 async def main(url):
