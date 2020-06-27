@@ -15,7 +15,8 @@ async def fetch(session, url):
     async with session.get(url) as response:
         if response.status == 404:
             print('404')
-        return await response.text()
+        else:
+            return await response.text()
 
 
 async def main(url):
