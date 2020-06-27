@@ -13,13 +13,14 @@ urls = [
 
 async def fetch(session, url):
     async with session.get(url) as response:
+        if response.status == 404:
+            print('404')
         return await response.text()
 
 
 async def main(url):
     async with aiohttp.ClientSession() as session:
-        html = await fetch(session, url)
-        soup = await soup_maker(html)
+        await extract_text(await fetch(session, url))
 
 
 async def soup_maker(html, display_result=False):
