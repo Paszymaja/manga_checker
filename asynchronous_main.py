@@ -1,22 +1,14 @@
-import aiohttp
 import asyncio
-from bs4 import BeautifulSoup
-from decorators import logtime
 
-urls = [
-    'https://readmha.com/chapter/boku-no-hero-academia-chapter-277',
-    'https://readsololeveling.org/chapter/solo-leveling-chapter-112/',
-    'https://readkaguyasama.com/chapter/kaguya-sama-love-is-war-chapter-194/',
-    'https://readchainsawman.com/chapter/chainsaw-man-chapter-76/'
-]
+import aiohttp
+from bs4 import BeautifulSoup
+
+from scripts.urls import urls
 
 
 async def fetch(session, url):
     async with session.get(url) as response:
-        if response.status == 404:
-            print('404')
-        else:
-            return await response.text()
+        return await response.text()
 
 
 async def main(url):
@@ -33,6 +25,7 @@ async def soup_maker(html, display_result=False):
 
 async def extract_text(html):
     soup = await soup_maker(html)
+    print(soup.find('h1', class_='text-white mb-3 uppercase sm:text-lg md:text-3xl').text)
     if soup.findAll('img', src='https://i.imgur.com/MXUX5T4.jpg'):
         print('nie ma')
     else:

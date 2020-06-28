@@ -1,19 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
-from decorators import logtime
 
-urls = [
-    'https://readmha.com/chapter/boku-no-hero-academia-chapter-277',
-    'https://readsololeveling.org/chapter/solo-leveling-chapter-112/',
-    'https://readkaguyasama.com/chapter/kaguya-sama-love-is-war-chapter-194/',
-    'https://readchainsawman.com/chapter/chainsaw-man-chapter-76/'
-]
+from scripts.decorators import logtime
+from scripts.urls import urls
+
 
 @logtime
 def main():
     for url in urls:
         r = requests.get(url)
-        print(f'''{url.split('/')[2]}: ''')
+        print(f'''{url.split('/')[2]} ''')
         soup = BeautifulSoup(r.content, 'html.parser')
         if r.status_code == 404:
             print('404 nie ma')
