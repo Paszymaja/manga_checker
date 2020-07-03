@@ -3,7 +3,7 @@ import time
 
 
 def logtime(func):
-    """Measure how long doeas it take for a function to run """
+    """Measure how long does it take for a function to run """
 
     def wrapper(*args, **kwargs):
         start_time = time.time()
