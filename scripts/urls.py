@@ -13,4 +13,3 @@ for url in start_week_urls:
     url[1] -= datetime.datetime.now().isocalendar()[1] - start_week
 
 urls = [url[0] + str(url[1]) for url in start_week_urls]
-print(urls)
