@@ -37,8 +37,11 @@ class AsynchronousStrategy:
 
 
 class SynchronousStrategy:
-    def manga_checker(self, urls):
-        for url in urls:
+    def __init__(self, urls):
+        self.urls = urls
+
+    def manga_checker(self):
+        for url in self.urls:
             r = requests.get(url)
             print(f'''{url.split('/')[2]} ''')
             soup = BeautifulSoup(r.content, 'html.parser')
